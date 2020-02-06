@@ -1,4 +1,4 @@
-import express, { Application, Request, Response, NextFunction } from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 
 // @desc   Get all courses
 // @route  GET /api/v1/courses
@@ -11,7 +11,7 @@ export const getCourses = (req: Request, res: Response, next: NextFunction) => {
 // @route  GET /api/v1/courses/:id
 // @access Public
 export const getCourse = (req: Request, res: Response, next: NextFunction) => {
-  res.status(200).json({ success: true, msg: 'Show all courses'});
+  res.status(200).json({ success: true, msg: 'Show one course'});
 }
 
 // @desc   Create new course
