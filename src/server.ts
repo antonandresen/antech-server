@@ -2,6 +2,7 @@ import express, { Application, Request, Response, NextFunction, Router } from "e
 import dotenv from 'dotenv';
 import morgan from 'morgan';
 import cors from 'cors';
+import colors from 'colors';
 import { resolve } from "path";
 
 import connectDB from './helpers/db';
@@ -30,13 +31,14 @@ app.get("/", (req: Request, res: Response) => {
 
 const PORT = process.env.PORT || 1337;
 
-const server = app.listen(PORT, () => console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`));
+const server = app.listen(PORT, () => console.log(
+  colors.blue(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`)));
 
 // Handle unhandled promise rejections
 process.once('unhandledRejection', (err, promise) => {
   if(err instanceof Error) {
-    console.error(`Error: ${err.name} - ${err.message}`);
-    console.error(`${err.stack}`);
+    console.error(colors.red(`Error: ${err.name} - ${err.message}`));
+    console.error(colors.red(`${err.stack}`));
     // Close server & exit process
     server.close(() => process.exit(1));
   }
