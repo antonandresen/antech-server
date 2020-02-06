@@ -8,7 +8,7 @@ dotenv.config({ path: resolve(__dirname, '../config/config.env')});
 const app: Application = express();
 
 app.get("/", (req: Request, res: Response) => {
-  res.json({ yeet: "dab" });
+  res.json({ test: "nice" });
 });
 
 const PORT = process.env.PORT || 1337;
