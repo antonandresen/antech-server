@@ -7,6 +7,9 @@ dotenv.config({ path: resolve(__dirname, '../config/config.env')});
 
 const app: Application = express();
 
+// Mount routers
+app.use('api/v1/courses', require('./routes/courses'));
+
 app.get("/", (req: Request, res: Response) => {
   res.json({ test: "nice" });
 });
