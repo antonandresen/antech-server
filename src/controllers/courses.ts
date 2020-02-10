@@ -1,9 +1,23 @@
 import express, { Request, Response, NextFunction } from 'express';
+import axios from 'axios';
 
 // @desc   Get all courses
 // @route  GET /api/v1/courses
 // @access Public
-export const getCourses = (req: Request, res: Response, next: NextFunction) => {
+export const getCourses = async (req: Request, res: Response, next: NextFunction) => {
+  const url = 'https://www.googleapis.com/youtube/v3/playlists?part=snippet&channelId=UCj1wCzm_fzG_tUBh8-780ZQ&maxResults=50';
+  const resp = await axios.get(`${url}&key=${process.env.GOOGLE_API_KEY}`);
+  const playlists = resp.data.items;
+  
+  const result = '';
+  const url2 = 'https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50';
+  playlists.forEach(async (playlist: any) => {
+    const resp2 = await axios.get(`${url2}&playlistId=${playlist.id}&key=${process.env.GOOGLE_API_KEY}`);
+    resp2.data.items.forEach((item: any) => {
+      console.log(item.snippet.title);
+    });
+  });
+  
   res.status(200).json({ success: true, msg: 'Show all courses'});
 }
 

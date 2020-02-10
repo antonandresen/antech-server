@@ -11,12 +11,14 @@
   "author": "Anton Andrésen <anton.andresen@hotmail.com> (anton.best)",
   "license": "MIT",
   "dependencies": {
+    "axios": "^0.19.2",
     "colors": "^1.4.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "mongoose": "^5.8.11",
-    "morgan": "^1.9.1"
+    "morgan": "^1.9.1",
+    "youtube-v3-api": "^1.1.1"
   },
   "devDependencies": {
     "@types/colors": "^1.2.1",
