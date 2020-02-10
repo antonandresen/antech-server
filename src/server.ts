@@ -6,13 +6,16 @@ import colors from 'colors';
 import { resolve } from "path";
 
 import connectDB from './helpers/db';
-import { EventEmitter } from "events";
+import { startAccessToken } from './helpers/YTAccessToken';
 
 // Load env vars
 dotenv.config({ path: resolve(__dirname, '../config/config.env')});
 
 // Connect to database
 connectDB();
+
+// Fetch and keep access token updated
+startAccessToken();
 
 const app: Application = express();
 

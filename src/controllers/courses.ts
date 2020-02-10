@@ -1,40 +1,32 @@
 import express, { Request, Response, NextFunction } from 'express';
 import axios from 'axios';
-import { access } from 'fs';
+import { getAccessToken } from '../helpers/YTAccessToken';
 
 // @desc   Get all courses
 // @route  GET /api/v1/courses
 // @access Public
 export const getCourses = async (req: Request, res: Response, next: NextFunction) => {
-  const postUrl =  'https://developers.google.com/oauthplayground/refreshAccessToken'
-  let accessToken: string;
-  try {
-    const postRes = await axios.post(postUrl, {
-      token_uri: 'https://oauth2.googleapis.com/token',
-      client_id: process.env.GOOGLE_CLIENT_ID,
-      client_secret: process.env.GOOGLE_CLIENT_SECRET,
-      refresh_token: process.env.GOOGLE_REFRESH_TOKEN
-    });
-    accessToken = postRes.data.access_token;
-    console.log(accessToken);
-  } catch (error) {
-    console.log(error);
-  }
-
-  /*
+  const accessToken = getAccessToken();
   const url = 'https://www.googleapis.com/youtube/v3/playlists?part=snippet&channelId=UCj1wCzm_fzG_tUBh8-780ZQ&maxResults=50';
-  const resp = await axios.get(`${url}&key=${process.env.GOOGLE_API_KEY}`);
+  const resp = await axios.get(`${url}&key=${process.env.GOOGLE_API_KEY}`, {
+    headers: {
+      'Authorization': `Bearer ${accessToken}`
+    }
+  });
   const playlists = resp.data.items;
   
-  const result = '';
   const url2 = 'https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50';
   playlists.forEach(async (playlist: any) => {
-    const resp2 = await axios.get(`${url2}&playlistId=${playlist.id}&key=${process.env.GOOGLE_API_KEY}`);
+    const resp2 = await axios.get(`${url2}&playlistId=${playlist.id}&key=${process.env.GOOGLE_API_KEY}`, {
+      headers: {
+        'Authorization': `Bearer ${accessToken}`
+      }
+    });
     resp2.data.items.forEach((item: any) => {
       console.log(item.snippet.title);
     });
   });
-  */
+  
   
   res.status(200).json({ success: true, msg: 'Show all courses'});
 }
