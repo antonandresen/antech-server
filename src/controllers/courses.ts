@@ -1,10 +1,27 @@
 import express, { Request, Response, NextFunction } from 'express';
 import axios from 'axios';
+import { access } from 'fs';
 
 // @desc   Get all courses
 // @route  GET /api/v1/courses
 // @access Public
 export const getCourses = async (req: Request, res: Response, next: NextFunction) => {
+  const postUrl =  'https://developers.google.com/oauthplayground/refreshAccessToken'
+  let accessToken: string;
+  try {
+    const postRes = await axios.post(postUrl, {
+      token_uri: 'https://oauth2.googleapis.com/token',
+      client_id: process.env.GOOGLE_CLIENT_ID,
+      client_secret: process.env.GOOGLE_CLIENT_SECRET,
+      refresh_token: process.env.GOOGLE_REFRESH_TOKEN
+    });
+    accessToken = postRes.data.access_token;
+    console.log(accessToken);
+  } catch (error) {
+    console.log(error);
+  }
+
+  /*
   const url = 'https://www.googleapis.com/youtube/v3/playlists?part=snippet&channelId=UCj1wCzm_fzG_tUBh8-780ZQ&maxResults=50';
   const resp = await axios.get(`${url}&key=${process.env.GOOGLE_API_KEY}`);
   const playlists = resp.data.items;
@@ -17,6 +34,7 @@ export const getCourses = async (req: Request, res: Response, next: NextFunction
       console.log(item.snippet.title);
     });
   });
+  */
   
   res.status(200).json({ success: true, msg: 'Show all courses'});
 }
