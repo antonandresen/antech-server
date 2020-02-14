@@ -7,6 +7,7 @@ import { resolve } from "path";
 
 import connectDB from './helpers/db';
 import { startAccessToken } from './helpers/YTAccessToken';
+import { errorHandler } from './middleware/error';
 
 // Load env vars
 dotenv.config({ path: resolve(__dirname, '../config/config.env')});
@@ -19,18 +20,23 @@ startAccessToken();
 
 const app: Application = express();
 
+// Body parser
+app.use(express.json());
+
 // Middleware
 if(process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 app.use(cors());
 
-// Mount routers
-app.use('/api/v1/courses', require('./routes/courses') as Router);
-
 app.get("/", (req: Request, res: Response) => {
   res.json({ test: "nice" });
 });
+
+// Mount routers
+app.use('/api/v1/courses', require('./routes/courses') as Router);
+
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 1337;
 
