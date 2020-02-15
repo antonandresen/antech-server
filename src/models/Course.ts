@@ -1,4 +1,6 @@
 import mongoose, { Document } from 'mongoose';
+import slugify from 'slugify';
+
 import { ICourse } from '../types/models';
 
 type DBCourse = ICourse & Document;
@@ -39,6 +41,13 @@ const CourseSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   }
+});
+
+// Create course slug from the name
+CourseSchema.pre('save', function(next) {
+  const document = this as DBCourse;
+  document.slug = slugify(document.name, { lower: true });
+  next();
 });
 
 const Course = mongoose.model<DBCourse>('Course', CourseSchema);
