@@ -15,6 +15,8 @@ export class YoutubeApiHelper {
       }
     });
     const playlists = resp.data.items;
+    const coursePlaylists = playlists.filter((pl: any) => pl.snippet.title.startsWith('COURSE:'));
+    console.log("NICE", coursePlaylists);
     
     const url2 = 'https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50';
     playlists.forEach(async (playlist: any) => {
@@ -23,9 +25,10 @@ export class YoutubeApiHelper {
           'Authorization': `Bearer ${accessToken}`
         }
       });
-      resp2.data.items.forEach((item: any) => {
-        console.log(item.snippet.title);
-      });
+      //console.log(resp2.data);
+      /*resp2.data.items.forEach((item: any) => {
+        console.log(item.snippet);
+      });*/
     });
   }
 };
