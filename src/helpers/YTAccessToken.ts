@@ -30,6 +30,6 @@ const updateAccessToken = async () => {
     accessToken = postRes.data.access_token;
     console.log("Refreshed access token!");
   } catch (error) {
-  console.error(error);
-}
+    console.error('YTAccessToken Update Error: ', error);
+  }
 };

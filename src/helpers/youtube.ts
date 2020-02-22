@@ -7,7 +7,9 @@ export class YoutubeApiHelper {
   constructor() {}
 
   static getCourses = async () => {
-    const accessToken = getAccessToken();
+
+    try {
+      const accessToken = getAccessToken();
     const url = 'https://www.googleapis.com/youtube/v3/playlists?part=snippet&channelId=UCj1wCzm_fzG_tUBh8-780ZQ&maxResults=50';
     const resp = await axios.get(`${url}&key=${process.env.GOOGLE_API_KEY}`, {
       headers: {
@@ -30,5 +32,8 @@ export class YoutubeApiHelper {
         console.log(item.snippet);
       });*/
     });
+    } catch (err) {
+      console.error('youtube.getCourses', err);
+    }
   }
 };
