@@ -14,3 +14,7 @@ export interface ICourse {
   slug: string;
   createdAt: Date;
 };
+
+export interface ICourseVideo {
+  url: string;
+}

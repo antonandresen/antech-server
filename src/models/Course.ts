@@ -2,6 +2,7 @@ import mongoose, { Document } from 'mongoose';
 import slugify from 'slugify';
 
 import { ICourse } from '../types/models';
+import CourseVideo from './CourseVideo';
 
 type DBCourse = ICourse & Document;
 
@@ -19,6 +20,7 @@ const CourseSchema = new mongoose.Schema({
     unique: true,
     trim: true,
   },
+  CourseVideos: [CourseVideo],
   cost: {
     type: Number,
     required: [true, 'Please add a cost']
